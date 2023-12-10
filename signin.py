@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-import ast
+# import ast
 import sqlite3
 
 root = Tk()
@@ -13,27 +13,36 @@ root.resizable(False, False)
 def signin():
     username = user.get()
     password = code.get()
-
-    file = open('datasheet.txt', 'r')
-    d = file.read()
-    r = ast.literal_eval(d)
-    file.close()
-
+    # file = open('datasheet.txt', 'r')
+    # d = file.read()
+    # r = ast.literal_eval(d)
+    # file.close()
+    db_con = sqlite3.connect('places.db')
+    db_cursor = db_con.cursor()
+    db_cursor.execute("SELECT * FROM users WHERE name='"+username+"'")
+    result = db_cursor.fetchall()
+    # print(result)
+    conn.commit()
+    # conn.close()
    # print(r.keys())
    # print(r.values())
 
-    if username in r.keys() and password == r[username]:
-        screen = Toplevel(root)
-        screen.title("App")
-        screen.geometry('925x500+300+200')
-        screen.config(bg="white")
+    # if username in r.keys() and password == r[username]:
+    for i in result:
+        list(i)
+        if i[1] == username and i[2] == password:
 
-        Label(screen, text="Hello everyone!!!", bg='#fff', font=(
-            'Calibri(body)', 50, 'bold')).pack(expand=True)
-        screen.mainloop()
+            screen = Toplevel(root)
+            screen.title("App")
+            screen.geometry('925x500+300+200')
+            screen.config(bg="white")
 
-    else:
-        messagebox.showerror('Invalid', 'invalid username or password')
+            Label(screen, text="Hello everyone!!!", bg='#fff', font=(
+                'Calibri(body)', 50, 'bold')).pack(expand=True)
+            screen.mainloop()
+
+        else:
+            messagebox.showerror('Invalid', 'invalid username or password')
 # ----------------------------------------------------------------------------------
 
 
@@ -48,39 +57,42 @@ def signup_command():
         username = user.get()
         password = code.get()
         confirm_password = confirm_code.get()
+        try:
+            # file = open('datasheet.txt', 'r+')
+            # d = file.read()
+            # r = ast.literal_eval(d)
 
-        if password == confirm_password:
+            # dict2 = {username: password}
+            # r.update(dict2)
+            # file.truncate(0)
+            # file.close()
 
-            try:
-                file = open('datasheet.txt', 'r+')
-                d = file.read()
-                r = ast.literal_eval(d)
+            # file = open('datasheet.txt', 'w')
+            # file.write(str(r))
+            if password != confirm_password:
+                raise Exception("Both passwords should match")
 
-                dict2 = {username: password}
-                r.update(dict2)
-                file.truncate(0)
-                file.close()
+            db_con = sqlite3.connect('places.db')
+            db_cursor = db_con.cursor()
+            db_cursor.execute(
+                "SELECT * FROM users WHERE name='"+username+"'")
+            existing_user = db_cursor.fetchall()
 
-                file = open('datasheet.txt', 'w')
-                w = file.write(str(r))
-                conn = sqlite3.connect('places.db')
-                cursor = conn.cursor()
-                cursor.execute(
-                    "INSERT INTO users (name,password) VALUES (?, ?)", (username, password))
-                conn.commit()
-                conn.close()
+            if len(existing_user) > 0:
+                raise Exception("User already exists")
+            db_cursor.execute(
+                "INSERT INTO users (name,password) VALUES (?, ?)", (username, password))
+            conn.commit()
+            conn.close()
 
-                messagebox.showinfo('Signup', 'Successfully sign up')
-                window.destroy()
-            except BaseException as e:
-                file = open('datasheet.txt', 'w')
-                pp = str({'Username': 'password'})
-                file.write(pp)
-                file.close()
-                messagebox.showerror('Invalid', e)
-
-        else:
-            messagebox.showerror('Invalid', "Both password should match")
+            messagebox.showinfo('Signup', 'Successfully sign up')
+            window.destroy()
+        except BaseException as e:
+            # file = open('datasheet.txt', 'w')
+            # pp = str({'Username': 'password'})
+            # file.write(pp)
+            # file.close()
+            messagebox.showerror('Invalid', e)
 
     def sign():
         window.destroy()
@@ -172,7 +184,7 @@ def signup_command():
 
 
 # ---------------------------------------------------------------------------------------
-img = PhotoImage(file='final.png')
+img = PhotoImage(file='images/final.png')
 Label(root, image=img, bg='white').place(x=50, y=50)
 
 frame = Frame(root, width=350, height=350, bg="white")
@@ -256,7 +268,7 @@ conn.commit()
 
 # close the database connection
 
-conn.close()
+# conn.close()
 
 
 root.mainloop()
