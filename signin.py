@@ -266,9 +266,9 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS users (id  INTEGER NOT NULL PRIMARY
 # curson commt
 conn.commit()
 
-# close the database connection
-
-# conn.close()
-
 
 root.mainloop()
+
+# close the database connection
+
+conn.close()
