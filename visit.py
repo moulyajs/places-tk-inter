@@ -1,7 +1,5 @@
 from tkinter import *
-from tkinter import messagebox
-from PIL import ImageTk, Image
-import sqlite3
+
 
 root = Tk()
 root.title('Places to visit')
@@ -30,32 +28,10 @@ Button(root, width=10, pady=7, text='Kochi',
        bg='#57a1f8', fg='white', border=0).place(x=450, y=230)
 ##
 
-img4 = PhotoImage(file='images/kolkota.jpg')
-Label(root, image=img4, border=0, bg='white').place(x=400, y=200)
-Button(root, width=10, pady=7, text='Kochi',
-       bg='#57a1f8', fg='white', border=0).place(x=450, y=230)
-conn = sqlite3.connect('places_database.db')
-
-cursor = conn.cursor()
-
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS places (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        description TEXT NOT NULL,
-        location TEXT NOT NULL,
-        image_path TEXT
-    )
-''')
-
-conn.commit()
-
-
-def fetch_places():
-    cursor.execute('SELECT * FROM places')
-    places = cursor.fetchall()
-    return places
+# img4 = PhotoImage(file='images/kolkata.jpg')
+# Label(root, image=img4, border=0, bg='white').place(x=400, y=200)
+# Button(root, width=10, pady=7, text='Kochi',
+# bg='#57a1f8', fg='white', border=0).place(x=450, y=230)
 
 
 root.mainloop()
-conn.close()
