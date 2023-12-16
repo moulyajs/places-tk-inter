@@ -28,7 +28,7 @@ def display_information(city):
     else:
         details = "Details not available for this city."
 
-    details_text.insert(END, f"PLACES TO VISIT IN  {city}:\n\n{details}")
+    details_text.insert(END, f"Places to visit in  {city}:\n\n{details}")
     details_text.config(state=DISABLED)
 
 
