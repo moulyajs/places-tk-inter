@@ -36,7 +36,7 @@ def facilities():
 # Create main window
     root = tk.Tk()
     root.title("Transportation Details")
-    root.geometry('925x500+300+200')
+    root.geometry('1025x500+300+200')
     root.configure(bg='#fff')
     root.resizable(True, True)
 # Date Entry

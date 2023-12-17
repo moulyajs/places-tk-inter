@@ -1,0 +1,6 @@
+Hotel Name,Amenities,Price,Rating,Image path
+Taj Vivantha,"5 star,Free Wi-Fi, Gym, Pool",50000 per night,*****,images\a.jpg
+Sheraton,"4 star,Spa, Restaurant, Concierge",5600 per night,****,images\b.jpg
+Hyatt Centric,"4 star,Parking, Breakfast, Pet-friendly",3000 per night,****,images\c.jpg
+The Movenpick,"3 star,Conference rooms, Bar, Room service",4000 per night,***,images\d.jpg
+Novotel,"5 star,Laundry service, Shuttle service, 24-hour front desk",3500 per night,*****,images\e.jpg

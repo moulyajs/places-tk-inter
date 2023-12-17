@@ -38,7 +38,7 @@ def places():
     root.configure(bg='#fff')
     root.resizable(True, True)
 
-    img = PhotoImage(file='images/bangalore.png')
+    img = PhotoImage(file='images/bangalorepic.png')
     label_bangalore = Label(root, image=img, border=0, bg='white')
     label_bangalore.place(x=20, y=40)
     label_bangalore_info = Label(root, width=30, pady=7, text='Bangalore',
@@ -47,7 +47,7 @@ def places():
     label_bangalore_info.bind(
         "<Button-1>", lambda event: display_information('Bangalore'))
 
-    img1 = PhotoImage(file='images/chennai.png')
+    img1 = PhotoImage(file='images/chennaipic.png')
     label_chennai = Label(root, image=img1, border=0, bg='white')
     label_chennai.place(x=450, y=40)
     label_chennai_info = Label(root, width=30, pady=7, text='Chennai',
@@ -56,7 +56,7 @@ def places():
     label_chennai_info.bind(
         "<Button-1>", lambda event: display_information('Chennai'))
 
-    img2 = PhotoImage(file='images/delhi.png')
+    img2 = PhotoImage(file='images/delhipic.png')
     label_delhi = Label(root, image=img2, border=0, bg='white')
     label_delhi.place(x=900, y=40)
     label_delhi_info = Label(root, width=30, pady=7, text='Delhi',
@@ -65,7 +65,7 @@ def places():
     label_delhi_info.bind(
         "<Button-1>", lambda event: display_information('Delhi'))
 
-    img3 = PhotoImage(file='images/kochi.png')
+    img3 = PhotoImage(file='images/kochipic.png')
     label_kochi = Label(root, image=img3, border=0, bg='white')
     label_kochi.place(x=20, y=450)
     label_kochi_info = Label(root, width=30, pady=7, text='Kochi',
@@ -74,7 +74,7 @@ def places():
     label_kochi_info.bind(
         "<Button-1>", lambda event: display_information('Kochi'))
 
-    img4 = PhotoImage(file='images/kolkata.png')
+    img4 = PhotoImage(file='images/kolkatapic.png')
     label_kolkata = Label(root, image=img4, border=0, bg='white')
     label_kolkata.place(x=450, y=450)
     label_kolkata_info = Label(root, width=30, pady=7, text='Kolkata',
