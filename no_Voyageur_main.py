@@ -7,7 +7,8 @@ from PIL import Image, ImageTk
 import wikipedia
 import requests
 import csv
-
+from finalplaces import places
+from transportation import facilities
 # Translator
 
 
@@ -268,233 +269,200 @@ def booking():
     n = []
 
     def booking2(l):
-        nonlocal n
-        n = []  # Clear the data before appending new data
-        with open('booking.csv', 'r') as f:
-            r = csv.reader(f)
+        f = open('booking.csv', 'r')
+        r = csv.reader(f)
 
-            def show_output(a):
-                text = "\n".join(a)
-                # Function to display output
-                output_label.delete(1.0, END)
-                output_label.insert(END, text)
+        def show_output(a):
+            text = "\n".join(a)
+        # Function to display output
+            output_label.config(text=text)
+        for i in r:
+            if i[1] == l:
+                n.append(i[0]+":"+i[2])
+        show_output(n)
 
-            for i in r:
-                if i[1] == l:
-                    n.append(i[0] + ":" + i[2])
-            show_output(n)
-
-    root = Toplevel()
+    root = Tk()
     root.title("Booking Portal")
-    root.geometry('500x600')
-    root.configure(bg='#f0f0f0')  # Background color
+    root.geometry('500x500')
 
-    header_frame = Frame(root, bg='black', bd=5)
-    header_frame.pack(side=TOP, fill=X)
+    w = Label(root, text='Booking Window', font=50)
+    w.pack()
 
-    header_label = Label(header_frame, text='Booking Window',
-                         font=("Arial", 20), fg='white', bg='black')
-    header_label.pack()
-
-    frame = Frame(root, bg='#f0f0f0', bd=5)
+    frame = Frame(root)
     frame.pack()
 
-    buttons = [
-        ("Bangalore", 'black'),
-        ("Delhi", 'black'),
-        ("Chennai", 'black'),
-        ("Kolkata", 'black'),
-        ("Kochi", 'black')
-    ]
+    bottomframe = Frame(root)
+    bottomframe.pack(side=BOTTOM)
 
-    for city, color in buttons:
-        btn = Button(frame, text=city, fg='white', bg=color,
-                     command=lambda c=city: booking2(c))
-        btn.pack(side=LEFT, fill=X, padx=5, pady=5)
+    b1 = Button(frame, text="Banglore", command=lambda: booking2('Bangalore'))
+    b1.pack()
 
-    output_label = Text(root, wrap=WORD)
-    output_label.pack(fill=BOTH, expand=True, padx=1, pady=1)
+    b2 = Button(frame, text="Delhi", command=lambda: booking2('Delhi'))
+    b2.pack()
 
-    image_path = r"images\bookingimage.jpg"  # Replace with your image path
-    img = Image.open(image_path)
-    img = img.resize((500, 250))  # Resize the image
-    photo = ImageTk.PhotoImage(img)
+    b3 = Button(frame, text="Chennai", command=lambda: booking2('Chennai'))
+    b3.pack()
 
-    image_label = Label(root, image=photo)
-    image_label.image = photo  # To prevent image from being garbage collected
-    image_label.pack(side=TOP, pady=10)
+    b4 = Button(frame, text="Kolkata", command=lambda: booking2('Kolkata'))
+    b4.pack()
+
+    b5 = Button(frame, text="Kochi", command=lambda: booking2('Kochi'))
+    b5.pack()
+
+    output_label = Label(root, text="")
+    output_label.pack()
 
 
 def rating():
     n = []
 
+    def label_writing():
+        # title_label = Label(frame,text = f"The various rating provided for {l} are")
+        return title_label.pack()
+
     def rating2(l):
-        n.clear()  # Clear the list before appending new ratings
-        with open('rate.csv', 'r') as f:
-            r = csv.reader(f)
-            for i in r:
-                if i[0] == l:
-                    n.append(i[1])
+        f = open('rate.csv', 'r')
+        r = csv.reader(f)
+        # print("The various rating provided for",l,"are")
+
+        def show_output(a):
+            text = "\n".join(a)
+      # Function to display output
+            output_label.config(text=text)
+        for i in r:
+            if i[0] == l:
+                n.append(i[1])
         show_output(n)
 
-    def show_output(a):
-        text = "\n".join(a)
-        # Use '1.0' instead of 1.0 for Text widget
-        output_label.delete('1.0', END)
-        output_label.insert(END, text)
-
-    root = Toplevel()
+    root = Tk()
     root.title("Rating Portal")
-    root.geometry('500x400')  # Adjusted window size
-    root.configure(bg='#f0f0f0')  # Background color
+    root.geometry('500x500')
 
-    header_frame = Frame(root, bg='black', bd=5)
-    header_frame.pack(side=TOP, fill=X)
+    w = Label(root, text='Rating Window', font=50)
+    w.pack()
 
-    header_label = Label(header_frame, text='Rating Window',
-                         font=("Arial", 20), fg='white', bg='black')
-    header_label.pack()
-
-    frame = Frame(root, bg='#f0f0f0', bd=5)
+    frame = Frame(root)
     frame.pack()
 
-    buttons = [
-        ("Bangalore", 'black'),
-        ("Delhi", 'black'),
-        ("Chennai", 'black'),
-        ("Kolkata", 'black'),
-        ("Kochi", 'black')
-    ]
+    bottomframe = Frame(root)
+    bottomframe.pack(side=BOTTOM)
 
-    for city, color in buttons:
-        btn = Button(frame, text=city, fg='white', bg=color,
-                     command=lambda c=city: rating2(c))
-        btn.pack(side=LEFT, padx=5, pady=5)  # Display buttons side by side
+    b1 = Button(frame, text="Banglore", command=lambda: rating2('Bangalore'))
+    b1.pack()
 
-    # Reduced the height of the text box
-    output_label = Text(root, wrap=WORD, height=5, bg='#f0f0f0')
-    output_label.pack(fill=BOTH, expand=True, padx=5,
-                      pady=5)  # Adjusted padding
+    b2 = Button(frame, text="Delhi", command=lambda: rating2('Delhi'))
+    b2.pack()
 
-    image_path = r"images\ratingimage.jpg"
-    img = Image.open(image_path)
-    img = img.resize((500, 100))
-    photo = ImageTk.PhotoImage(img)
+    b3 = Button(frame, text="Chennai", command=lambda: rating2('Chennai'))
+    b3.pack()
 
-    image_label = Label(root, image=photo)
-    image_label.image = photo
-    image_label.pack(side=BOTTOM, pady=10)
+    b4 = Button(frame, text="Kolkata", command=lambda: rating2('Kolkata'))
+    b4.pack()
 
-    # root.mainloop()
+    b5 = Button(frame, text="Kochi", command=lambda: rating2('Kochi'))
+    b5.pack()
+
+    output_label = Label(root, text="")
+    output_label.pack()
 
 
 def healthaid():
     n = []
 
     def healthaid2(l):
-        nonlocal n
-        n = []  # Clear the data before appending new data
-        with open('healthaid.csv', 'r') as f:
-            r = csv.reader(f)
+        f = open('healthaid.csv', 'r')
+        r = csv.reader(f)
+        # print("The various hospitals are")
 
-            def show_output(a):
-                text = "\n".join(a)
-                # Function to display output
-                output_label.delete(1.0, END)
-                output_label.insert(END, text)
+        def show_output(a):
+            text = "\n".join(a)
+      # Function to display output
+            output_label.config(text=text)
+        for i in r:
+            if i[0] == l:
+                n.append(i[1])
+        show_output(n)
 
-            for i in r:
-                if i[0] == l:
-                    n.append(i[1])
-            show_output(n)
-
-    root = Toplevel()
-    root.title("Healthaid Portal")
+    root = Tk()
+    root.title("HealthAid Portal")
     root.geometry('500x500')
-    root.configure(bg='#f5f5dc')  # Background color set to beige
 
-    w = Label(root, text='Healthaid Window', font=50,
-              bg='#f5f5dc')  # Set label background color
+    w = Label(root, text='HealthAid Window', font=50)
     w.pack()
 
-    frame = Frame(root, bg='#f5f5dc')  # Set frame background color
+    frame = Frame(root)
     frame.pack()
 
-    buttons = [
-        ("Bangalore", 'light blue'),
-        ("Delhi", 'light blue'),
-        ("Chennai", 'light blue'),
-        ("Kolkata", 'light blue'),
-        ("Kochi", 'light blue')
-    ]
+    bottomframe = Frame(root)
+    bottomframe.pack(side=BOTTOM)
 
-    for city, color in buttons:
-        btn = Button(frame, text=city, fg='white', bg=color,
-                     command=lambda c=city: healthaid2(c))
-        btn.pack(side=LEFT, padx=5, pady=5)  # Display buttons side by side
+    b1 = Button(frame, text="Banglore",
+                command=lambda: healthaid2('Bangalore'))
+    b1.pack()
 
-    image_path = r"images\hospitals.jpg"
-    img = Image.open(image_path)
-    img = img.resize((500, 150))  # Resize the image
-    photo = ImageTk.PhotoImage(img)
+    b2 = Button(frame, text="Delhi", command=lambda: healthaid2('Delhi'))
+    b2.pack()
 
-    # Set image label background color
-    image_label = Label(root, image=photo, bg='#f5f5dc')
-    image_label.image = photo  # To prevent image from being garbage collected
-    image_label.pack(side=TOP, pady=10)
+    b3 = Button(frame, text="Chennai", command=lambda: healthaid2('Chennai'))
+    b3.pack()
 
-    output_label = Text(root, wrap=WORD, bg="#f5f5dc")
-    # Set text box size and position
-    output_label.pack(fill=BOTH, expand=True, padx=10, pady=5)
+    b4 = Button(frame, text="Kolkata", command=lambda: healthaid2('Kolkata'))
+    b4.pack()
+
+    b5 = Button(frame, text="Kochi", command=lambda: healthaid2('Kochi'))
+    b5.pack()
+
+    output_label = Label(root, text="")
+    output_label.pack()
 
 
 def events():
     n = []
 
     def events2(l):
-        nonlocal n
-        n = []  # Clear the data before appending new data
-        with open('events.csv', 'r') as f:
-            r = csv.reader(f)
+        f = open('events.csv', 'r')
+        r = csv.reader(f)
+        # print("The various events are:")
 
-            def show_output(a):
-                text = "\n".join(a)
-                output_label.delete(1.0, END)
-                output_label.insert(END, text)
+        def show_output(a):
+            text = "\n".join(a)
+      # Function to display output
+            output_label.config(text=text)
+        for i in r:
+            if i[0] == l:
+                n.append(i[1]+":"+i[2]+","+i[3])
+        show_output(n)
 
-            for i in r:
-                if i[0] == l:
-                    n.append(i[1]+":"+i[2]+","+i[3])
-            show_output(n)
-
-    root = Toplevel()
+    root = Tk()
     root.title("Events Portal")
-    root.geometry('500x600')  # Adjusted the height to fit the layout
-    root.configure(bg="beige")
-    w = Label(root, text='Events Window', font=('Arial', 20))
+    root.geometry('500x500')
+
+    w = Label(root, text='Events Window', font=50)
     w.pack()
 
-    frame = Frame(root, bg='lightblue')  # Changed the background color
+    frame = Frame(root)
     frame.pack()
 
-    cities = ['Bangalore', 'Delhi', 'Chennai', 'Kolkata', 'Kochi']
-    for city in cities:
-        button = Button(frame, text=city, fg='white', bg='orange', padx=10, pady=10,
-                        command=lambda c=city: events2(c))  # Adjusted button colors
-        button.pack(side=LEFT, padx=10, pady=10)  # Placed buttons side by side
+    bottomframe = Frame(root)
+    bottomframe.pack(side=BOTTOM)
 
-    image_path = r"images\events.jpg"
-    img = Image.open(image_path)
-    img = img.resize((400, 200))  # Adjusted image size
-    photo = ImageTk.PhotoImage(img)
+    b1 = Button(frame, text="Banglore", command=lambda: events2('Bangalore'))
+    b1.pack()
 
-    image_label = Label(root, image=photo)
-    image_label.image = photo
-    image_label.pack(pady=10)
+    b2 = Button(frame, text="Delhi", command=lambda: events2('Delhi'))
+    b2.pack()
 
-    # Adjusted textbox color and size
-    output_label = Text(root, wrap=WORD, height=10, bg='lightblue')
-    output_label.pack(fill=BOTH, expand=True)
+    b3 = Button(frame, text="Chennai", command=lambda: events2('Chennai'))
+    b3.pack()
+
+    b4 = Button(frame, text="Kolkata", command=lambda: events2('Kolkata'))
+    b4.pack()
+
+    b5 = Button(frame, text="Kochi", command=lambda: events2('Kochi'))
+    b5.pack()
+
+    output_label = Label(root, text="")
+    output_label.pack()
 
 
 def accommodation():
@@ -652,3 +620,45 @@ def Shopping():
     places_str = StringVar()
     places_label = Label(root, bg="black", fg="white", textvariable=places_str)
     places_label.pack()
+
+
+# Voyageur
+"""main = Tk()
+main.title("Voyageur")
+main.geometry('1400x800')
+main.configure(bg='beige')
+
+heading1 = Label(main, text='VOYAGEUR', font=(
+    "Tahoma", 40, "bold italic"), bg='beige', width=40)
+heading2 = Label(main, text='TRAVEL AND TOURISM MANAGEMENT',
+                 font=("Courier New", 22, "italic"), bg='beige')
+
+heading1.pack()
+heading2.pack()
+
+
+def button_creation(functionality, function, colour, a, b):
+    p = Button(main, text=functionality, fg=colour, command=function, width=20,
+               height=5, font=("Helvetica", 16, 'bold italic'), relief=FLAT, bg='beige')
+    return p.place(x=a, y=b)
+
+# dark turqouise - #1EBCAD
+# dark emerald green - #00C800
+# orchid purple - DA70D6
+# coral - type of orange
+
+
+f1 = button_creation('Translator', create_translator, '#00C800', 940, 550)
+f2 = button_creation('History', history_print, '#00C800', 640, 150)
+f3 = button_creation('Diversity', diversity_print, '#00C800', 340, 150)
+f4 = button_creation('Booking', booking, '#1EBCAD', 40, 350)
+f5 = button_creation('Accomodation', accommodation, '#1EBCAD', 640, 350)
+f6 = button_creation('Food', FOODS, '#1EBCAD', 340, 550)
+f7 = button_creation('Shopping', Shopping, '#DA70D6', 640, 550)
+f8 = button_creation('Transportation', facilities, '#DA70D6', 340, 350)
+f9 = button_creation('Places To Visit', places, '#DA70D6', 940, 150)
+f10 = button_creation('Rating', rating, 'coral', 940, 350)
+f11 = button_creation('Health Aid', healthaid, 'coral', 40, 150)
+f12 = button_creation('Events', events, 'coral', 40, 550)
+
+main.mainloop()"""

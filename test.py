@@ -10,76 +10,88 @@ import sqlite3
 
 root = Tk()
 root.title('VOYAGEUR')
-root.geometry('925x500+300+200')  # width,height,x_offset,y_offset
-root.configure(bg='#fff')  # white background
+root.geometry('925x500+300+200')
+root.configure(bg='#fff')
 root.resizable(True, True)
 
 
 def signin():
     username = user.get()
     password = code.get()
+    # file = open('datasheet.txt', 'r')
+    # d = file.read()
+    # r = ast.literal_eval(d)
+    # file.close()
+    try:
+        with sqlite3.connect('places.db') as db_con:
+            # db_con = sqlite3.connect('places.db')
+            db_cursor = db_con.cursor()
+            db_cursor.execute("SELECT * FROM users WHERE name='"+username+"'")
+            result = db_cursor.fetchall()
+    # print(result)
+            #conn.commit()
+    # conn.close()
+   # print(r.keys())
+   # print(r.values())
 
-    db_con = sqlite3.connect('places.db')
-    db_cursor = db_con.cursor()
-    db_cursor.execute("SELECT * FROM users WHERE name='" +
-                      username+"'")  # checks all the username
-    result = db_cursor.fetchall()  # fetches rows and provide a tuple
+    # if username in r.keys() and password == r[username]:
+        for i in result:
+            list(i)
+            if i[1] == username and i[2] == password:
 
-    conn.commit()  # commit changes made to database
+                main = Toplevel()
+                main.title("Voyageur")
+                main.geometry('1400x800')
+                main.configure(bg='beige')
 
-    for i in result:
-        list(i)
-        if i[1] == username and i[2] == password:
+                heading1 = Label(main, text='VOYAGEUR', font=(
+                    "Tahoma", 40, "bold italic"), bg='beige', width=40)
+                heading2 = Label(main, text='TRAVEL AND TOURISM MANAGEMENT',
+                                 font=("Courier New", 22, "italic"), bg='beige')
 
-            main = Toplevel()  # mainwindow after signin page
-            main.title("Voyageur")
-            main.geometry('1400x800')
-            main.configure(bg='beige')
+                heading1.pack()
+                heading2.pack()
 
-            heading1 = Label(main, text='VOYAGEUR', font=(
-                "Tahoma", 40, "bold italic"), bg='beige', width=40)
-            heading2 = Label(main, text='TRAVEL AND TOURISM MANAGEMENT',
-                             font=("Courier New", 22, "italic"), bg='beige')
-
-            heading1.pack()
-            heading2.pack()
-
-            def button_creation(functionality, function, colour, a, b):
-                p = Button(main, text=functionality, fg=colour, command=function, width=20,
-                           height=5, font=("Helvetica", 16, 'bold italic'), relief=FLAT, bg='beige')
-                return p.place(x=a, y=b)
-
+                def button_creation(functionality, function, colour, a, b):
+                    p = Button(main, text=functionality, fg=colour, command=function, width=20,
+                               height=5, font=("Helvetica", 16, 'bold italic'), relief=FLAT, bg='beige')
+                    return p.place(x=a, y=b)
+        db_con.commit()
 # dark turqouise - #1EBCAD
 # dark emerald green - #00C800
 # orchid purple - DA70D6
 # coral - type of orange
 
-            f1 = button_creation(
-                'Translator', create_translator, '#00C800', 940, 550)
-            f2 = button_creation('History', history_print, '#00C800', 640, 150)
-            f3 = button_creation(
-                'Diversity', diversity_print, '#00C800', 340, 150)
-            f4 = button_creation('Booking', booking, '#1EBCAD', 40, 350)
-            f5 = button_creation(
-                'Accomodation', accommodation, '#1EBCAD', 640, 350)
-            f6 = button_creation('Food', FOODS, '#1EBCAD', 340, 550)
-            f7 = button_creation('Shopping', Shopping, '#DA70D6', 640, 550)
-            f8 = button_creation(
-                'Transportation', facilities, '#DA70D6', 340, 350)
-            f9 = button_creation(
-                'Places To Visit', places, '#DA70D6', 940, 150)
-            f10 = button_creation('Rating', rating, 'coral', 940, 350)
-            f11 = button_creation('Health Aid', healthaid, 'coral', 40, 150)
-            f12 = button_creation('Events', events, 'coral', 40, 550)
+                f1 = button_creation(
+                    'Translator', create_translator, '#00C800', 940, 550)
+                f2 = button_creation(
+                    'History', history_print, '#00C800', 640, 150)
+                f3 = button_creation(
+                    'Diversity', diversity_print, '#00C800', 340, 150)
+                f4 = button_creation('Booking', booking, '#1EBCAD', 40, 350)
+                f5 = button_creation(
+                    'Accomodation', accommodation, '#1EBCAD', 640, 350)
+                f6 = button_creation('Food', FOODS, '#1EBCAD', 340, 550)
+                f7 = button_creation('Shopping', Shopping, '#DA70D6', 640, 550)
+                f8 = button_creation(
+                    'Transportation', facilities, '#DA70D6', 340, 350)
+                f9 = button_creation(
+                    'Places To Visit', places, '#DA70D6', 940, 150)
+                f10 = button_creation('Rating', rating, 'coral', 940, 350)
+                f11 = button_creation(
+                    'Health Aid', healthaid, 'coral', 40, 150)
+                f12 = button_creation('Events', events, 'coral', 40, 550)
 
-            main.mainloop()
+                main.mainloop()
 
-        else:
-            messagebox.showerror('Invalid', 'invalid username or password')
+            else:
+                messagebox.showerror('Invalid', 'invalid username or password')
 # ----------------------------------------------------------------------------------
+    except Exception as e:
+        messagebox.showerror('Invalid', e)
 
 
-def signup_command():           # when signup button clicked
+def signup_command():
     window = Toplevel(root)
     window.title("SignUp")
     window.geometry('925x500+300+200')
@@ -91,7 +103,17 @@ def signup_command():           # when signup button clicked
         password = code.get()
         confirm_password = confirm_code.get()
         try:
+            # file = open('datasheet.txt', 'r+')
+            # d = file.read()
+            # r = ast.literal_eval(d)
 
+            # dict2 = {username: password}
+            # r.update(dict2)
+            # file.truncate(0)
+            # file.close()
+
+            # file = open('datasheet.txt', 'w')
+            # file.write(str(r))
             if password != confirm_password:
                 raise Exception("Both passwords should match")
 
@@ -105,13 +127,16 @@ def signup_command():           # when signup button clicked
                 raise Exception("User already exists")
             db_cursor.execute(
                 "INSERT INTO users (name,password) VALUES (?, ?)", (username, password))
-            db_con.commit()
-            db_con.close()
+            conn.commit()
+            conn.close()
 
             messagebox.showinfo('Signup', 'Successfully sign up')
             window.destroy()
         except BaseException as e:
-
+            # file = open('datasheet.txt', 'w')
+            # pp = str({'Username': 'password'})
+            # file.write(pp)
+            # file.close()
             messagebox.showerror('Invalid', e)
 
     def sign():
@@ -235,6 +260,8 @@ user.bind('<FocusIn>', on_enter_b)
 user.bind('<FocusOut>', on_leave_b)
 
 
+# Frame(frame, width=295, height=2, bg='black').place(x=25, y=107)
+
 # ------------------------------------------------------------
 
 
@@ -255,6 +282,7 @@ code.insert(0, 'Password')
 code.bind('<FocusIn>', on_enter_a)
 code.bind('<FocusOut>', on_leave_a)
 
+# Frame(frame, width=295, height=2, bg='black').place(x=25, y=177)
 
 # -------------------------------------------------------------
 

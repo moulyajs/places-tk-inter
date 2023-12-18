@@ -286,47 +286,53 @@ def booking():
 
     root = Toplevel()
     root.title("Booking Portal")
-    root.geometry('500x600')
-    root.configure(bg='#f0f0f0')  # Background color
+    root.geometry('500x550')
 
-    header_frame = Frame(root, bg='black', bd=5)
-    header_frame.pack(side=TOP, fill=X)
+    w = Label(root, text='Booking Window', font=50)
+    w.pack()
 
-    header_label = Label(header_frame, text='Booking Window',
-                         font=("Arial", 20), fg='white', bg='black')
-    header_label.pack()
-
-    frame = Frame(root, bg='#f0f0f0', bd=5)
+    frame = Frame(root, bg='black', bd=50)
     frame.pack()
 
-    buttons = [
-        ("Bangalore", 'black'),
-        ("Delhi", 'black'),
-        ("Chennai", 'black'),
-        ("Kolkata", 'black'),
-        ("Kochi", 'black')
-    ]
+    b1 = Button(frame, text="Banglore", fg='white', bg='black',
+                command=lambda: booking2('Bangalore'))
+    b1.pack()
 
-    for city, color in buttons:
-        btn = Button(frame, text=city, fg='white', bg=color,
-                     command=lambda c=city: booking2(c))
-        btn.pack(side=LEFT, fill=X, padx=5, pady=5)
+    b2 = Button(frame, text="Delhi", fg='white', bg='black',
+                command=lambda: booking2('Delhi'))
+    b2.pack()
+
+    b3 = Button(frame, text="Chennai", fg='white', bg='black',
+                command=lambda: booking2('Chennai'))
+    b3.pack()
+
+    b4 = Button(frame, text="Kolkata", fg='white', bg='black',
+                command=lambda: booking2('Kolkata'))
+    b4.pack()
+
+    b5 = Button(frame, text="Kochi", fg='white', bg='black',
+                command=lambda: booking2('Kochi'))
+    b5.pack()
 
     output_label = Text(root, wrap=WORD)
-    output_label.pack(fill=BOTH, expand=True, padx=1, pady=1)
+    output_label.pack()
 
     image_path = r"images\bookingimage.jpg"  # Replace with your image path
     img = Image.open(image_path)
-    img = img.resize((500, 250))  # Resize the image
+    img = img.resize((300, 100), Image.NEAREST)  # Resize the image as needed
     photo = ImageTk.PhotoImage(img)
 
     image_label = Label(root, image=photo)
     image_label.image = photo  # To prevent image from being garbage collected
-    image_label.pack(side=TOP, pady=10)
+    image_label.pack(side=BOTTOM, pady=10)
 
 
 def rating():
     n = []
+
+    def label_writing():
+        # You can use this function to write labels if needed in the future
+        pass
 
     def rating2(l):
         n.clear()  # Clear the list before appending new ratings
@@ -345,47 +351,46 @@ def rating():
 
     root = Toplevel()
     root.title("Rating Portal")
-    root.geometry('500x400')  # Adjusted window size
-    root.configure(bg='#f0f0f0')  # Background color
+    root.geometry('500x500')
 
-    header_frame = Frame(root, bg='black', bd=5)
-    header_frame.pack(side=TOP, fill=X)
+    w = Label(root, text='Rating Window', font=50)
+    w.pack()
 
-    header_label = Label(header_frame, text='Rating Window',
-                         font=("Arial", 20), fg='white', bg='black')
-    header_label.pack()
-
-    frame = Frame(root, bg='#f0f0f0', bd=5)
+    frame = Frame(root, bg='black', bd=50)
     frame.pack()
 
-    buttons = [
-        ("Bangalore", 'black'),
-        ("Delhi", 'black'),
-        ("Chennai", 'black'),
-        ("Kolkata", 'black'),
-        ("Kochi", 'black')
-    ]
+    b1 = Button(frame, text="Bangalore", fg='white', bg='black',
+                command=lambda: rating2('Bangalore'))  # Fixed spelling
+    b1.pack()
 
-    for city, color in buttons:
-        btn = Button(frame, text=city, fg='white', bg=color,
-                     command=lambda c=city: rating2(c))
-        btn.pack(side=LEFT, padx=5, pady=5)  # Display buttons side by side
+    b2 = Button(frame, text="Delhi", fg='white', bg='black',
+                command=lambda: rating2('Delhi'))
+    b2.pack()
 
-    # Reduced the height of the text box
-    output_label = Text(root, wrap=WORD, height=5, bg='#f0f0f0')
-    output_label.pack(fill=BOTH, expand=True, padx=5,
-                      pady=5)  # Adjusted padding
+    b3 = Button(frame, text="Chennai", fg='white', bg='black',
+                command=lambda: rating2('Chennai'))
+    b3.pack()
+
+    b4 = Button(frame, text="Kolkata", fg='white', bg='black',
+                command=lambda: rating2('Kolkata'))
+    b4.pack()
+
+    b5 = Button(frame, text="Kochi", fg='white', bg='black',
+                command=lambda: rating2('Kochi'))
+    b5.pack()
+
+    # Use 'word' directly instead of WORDS
+    output_label = Text(root, wrap='word')
+    output_label.pack()
 
     image_path = r"images\ratingimage.jpg"
     img = Image.open(image_path)
-    img = img.resize((500, 100))
+    img = img.resize((300, 100), Image.NEAREST)  # Resize the image as needed
     photo = ImageTk.PhotoImage(img)
 
     image_label = Label(root, image=photo)
-    image_label.image = photo
+    image_label.image = photo  # To prevent image from being garbage collected
     image_label.pack(side=BOTTOM, pady=10)
-
-    # root.mainloop()
 
 
 def healthaid():
@@ -411,41 +416,44 @@ def healthaid():
     root = Toplevel()
     root.title("Healthaid Portal")
     root.geometry('500x500')
-    root.configure(bg='#f5f5dc')  # Background color set to beige
 
-    w = Label(root, text='Healthaid Window', font=50,
-              bg='#f5f5dc')  # Set label background color
+    w = Label(root, text='Healthaid Window', font=50)
     w.pack()
 
-    frame = Frame(root, bg='#f5f5dc')  # Set frame background color
+    frame = Frame(root, bg='black', bd=50)
     frame.pack()
 
-    buttons = [
-        ("Bangalore", 'light blue'),
-        ("Delhi", 'light blue'),
-        ("Chennai", 'light blue'),
-        ("Kolkata", 'light blue'),
-        ("Kochi", 'light blue')
-    ]
+    b1 = Button(frame, text="Banglore", fg='white', bg='black',
+                command=lambda: healthaid2('Bangalore'))
+    b1.pack()
 
-    for city, color in buttons:
-        btn = Button(frame, text=city, fg='white', bg=color,
-                     command=lambda c=city: healthaid2(c))
-        btn.pack(side=LEFT, padx=5, pady=5)  # Display buttons side by side
+    b2 = Button(frame, text="Delhi",  fg='white', bg='black',
+                command=lambda: healthaid2('Delhi'))
+    b2.pack()
+
+    b3 = Button(frame, text="Chennai", fg='white', bg='black',
+                command=lambda: healthaid2('Chennai'))
+    b3.pack()
+
+    b4 = Button(frame, text="Kolkata", fg='white', bg='black',
+                command=lambda: healthaid2('Kolkata'))
+    b4.pack()
+
+    b5 = Button(frame, text="Kochi",  fg='white', bg='black',
+                command=lambda: healthaid2('Kochi'))
+    b5.pack()
+
+    output_label = Text(root, wrap=WORD)
+    output_label.pack()
 
     image_path = r"images\hospitals.jpg"
     img = Image.open(image_path)
-    img = img.resize((500, 150))  # Resize the image
+    img = img.resize((300, 100), Image.NEAREST)  # Resize the image as needed
     photo = ImageTk.PhotoImage(img)
 
-    # Set image label background color
-    image_label = Label(root, image=photo, bg='#f5f5dc')
+    image_label = Label(root, image=photo)
     image_label.image = photo  # To prevent image from being garbage collected
-    image_label.pack(side=TOP, pady=10)
-
-    output_label = Text(root, wrap=WORD, bg="#f5f5dc")
-    # Set text box size and position
-    output_label.pack(fill=BOTH, expand=True, padx=10, pady=5)
+    image_label.pack(side=BOTTOM, pady=10)
 
 
 def events():
@@ -459,6 +467,7 @@ def events():
 
             def show_output(a):
                 text = "\n".join(a)
+                # Function to display output
                 output_label.delete(1.0, END)
                 output_label.insert(END, text)
 
@@ -469,32 +478,45 @@ def events():
 
     root = Toplevel()
     root.title("Events Portal")
-    root.geometry('500x600')  # Adjusted the height to fit the layout
-    root.configure(bg="beige")
-    w = Label(root, text='Events Window', font=('Arial', 20))
+    root.geometry('500x500')
+
+    w = Label(root, text='Events Window', font=50)
     w.pack()
 
-    frame = Frame(root, bg='lightblue')  # Changed the background color
+    frame = Frame(root, bg='black', bd=50)
     frame.pack()
 
-    cities = ['Bangalore', 'Delhi', 'Chennai', 'Kolkata', 'Kochi']
-    for city in cities:
-        button = Button(frame, text=city, fg='white', bg='orange', padx=10, pady=10,
-                        command=lambda c=city: events2(c))  # Adjusted button colors
-        button.pack(side=LEFT, padx=10, pady=10)  # Placed buttons side by side
+    b1 = Button(frame, text="Banglore", fg='white', bg='black',
+                command=lambda: events2('Bangalore'))
+    b1.pack()
+
+    b2 = Button(frame, text="Delhi", fg='white', bg='black',
+                command=lambda: events2('Delhi'))
+    b2.pack()
+
+    b3 = Button(frame, text="Chennai", fg='white', bg='black',
+                command=lambda: events2('Chennai'))
+    b3.pack()
+
+    b4 = Button(frame, text="Kolkata",  fg='white',
+                bg='black', command=lambda: events2('Kolkata'))
+    b4.pack()
+
+    b5 = Button(frame, text="Kochi", fg='white', bg='black',
+                command=lambda: events2('Kochi'))
+    b5.pack()
+
+    output_label = Text(root, wrap=WORD)
+    output_label.pack()
 
     image_path = r"images\events.jpg"
     img = Image.open(image_path)
-    img = img.resize((400, 200))  # Adjusted image size
+    img = img.resize((300, 100), Image.NEAREST)  # Resize the image as needed
     photo = ImageTk.PhotoImage(img)
 
     image_label = Label(root, image=photo)
-    image_label.image = photo
-    image_label.pack(pady=10)
-
-    # Adjusted textbox color and size
-    output_label = Text(root, wrap=WORD, height=10, bg='lightblue')
-    output_label.pack(fill=BOTH, expand=True)
+    image_label.image = photo  # To prevent image from being garbage collected
+    image_label.pack(side=BOTTOM, pady=10)
 
 
 def accommodation():

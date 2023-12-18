@@ -158,9 +158,12 @@ def events():
     b4.pack()
     b5 = Button(frame, text="Kochi", command=lambda: events2('Kochi'))
     b5.pack()
-    output_label = tkinter.Label(root, text="")
-    output_label.pack()
+    # output_label = tkinter.Label(root, text="")
+    # output_label.pack()
     root.mainloop()
+    output_label = Text(root, wrap=WORD, width=40, height=10,
+                        state=DISABLED, bg='#57a1f8', font=("Arial", 12), padx=10, pady=10)
+    output_label.place(relx=0.9, rely=0.9, anchor='se')
 
 
 if __name__ == "__main__":
